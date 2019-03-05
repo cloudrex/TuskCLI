@@ -14,7 +14,7 @@ import {IOptions} from "./Options";
 cli
     .version("Please see NPM package for details")
     .option("-t, --tuskfile","specify the path to the TuskFile")
-    .option("-d, --default", "specify the default action")
+    .option("-d, --default", "specify the default action", /^(infer|build|start)/)
     .option("-l, --list", "list all available tasks")
     .option("-i, --init", "initialize a TuskFile in the current directory")
     .parse(process.argv);
@@ -32,20 +32,23 @@ if (cli.default) {
     options.defaultAction = cli.default;
 }
 
+// Initialize a new TuskFile.
+if (cli.init) {
+    // Ensure TuskFile does not already exist.
+    if (fs.existsSync(options.tuskFilePath)) {
+        console.log(colors.red("TuskFile.js already exists in current directory."));
+        process.exit(1);
+    }
+
+    // Write TuskFile.
+    fs.writeFileSync("TuskFile.js", "//");
+}
+
 // Ensure TuskFile exists.
 if (!fs.existsSync(options.tuskFilePath)) {
     console.log(colors.red(`TuskFile.js not found in specified path (case-sensitive).`));
     process.exit(1);
 }
-
-// Register default tasks.
-Task("build", "Build the project", [
-    {
-        name: "build",
-        description: "Build the project",
-        callback: ScriptOps.npmBuild
-    }
-]);
 
 // Inject globals.
 (global as any).Task = Task;
