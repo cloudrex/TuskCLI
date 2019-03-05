@@ -25,5 +25,8 @@
     "devDependencies": {
         "@types/md5-file": "^4.0.0",
         "@types/node": "^11.10.4"
-    }
+    },
+    "files": [
+        "dist"
+    ]
 }
