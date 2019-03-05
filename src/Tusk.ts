@@ -4,7 +4,7 @@ import Task, {Tasks} from "./Task";
 import Report from "./Report";
 import colors from "colors";
 import {IOptions} from "./Options";
-import {ScriptOps} from "@atlas/automata";
+import {ScriptOps} from "tusk";
 import {DefaultAction} from "./Misc";
 import TuskCache from "./TuskCache";
 

@@ -18,9 +18,9 @@
     "author": "CloudRex <cloudrex@outlook.com>",
     "license": "MIT",
     "dependencies": {
-        "@atlas/automata": "^1.2.3",
         "commander": "^2.19.0",
-        "md5-file": "^4.0.0"
+        "md5-file": "^4.0.0",
+        "tusk": "^1.2.3"
     },
     "devDependencies": {
         "@types/md5-file": "^4.0.0",
