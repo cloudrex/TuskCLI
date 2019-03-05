@@ -13,6 +13,7 @@ import {IOptions} from "./Options";
 // Prepare & parse CLI.
 cli
     .version("Please see NPM package for details")
+    .usage("[options] <task>")
     .option("-t, --tuskfile","specify the path to the TuskFile")
     .option("-d, --default", "specify the default action", /^(infer|build|start)/)
     .option("-l, --list", "list all available tasks")
@@ -32,6 +33,19 @@ if (cli.default) {
     options.defaultAction = cli.default;
 }
 
+// List all available tasks.
+if (cli.list) {
+    for (const task of Tasks.values()) {
+        console.log(colors.cyan(task.name) + " " + colors.gray(task.desc || ""));
+    }
+
+    if (Tasks.values.length === 0) {
+        console.log(colors.gray("No tasks found."));
+    }
+
+    process.exit(0);
+}
+
 // Initialize a new TuskFile.
 if (cli.init) {
     // Ensure TuskFile does not already exist.
@@ -42,6 +56,9 @@ if (cli.init) {
 
     // Write TuskFile.
     fs.writeFileSync("TuskFile.js", "//");
+
+    // Exit application.
+    process.exit(0);
 }
 
 // Ensure TuskFile exists.
@@ -50,6 +67,15 @@ if (!fs.existsSync(options.tuskFilePath)) {
     process.exit(1);
 }
 
+// Register default tasks.
+Task("build", "Build the project", [
+    {
+        name: "build",
+        description: "Build the project",
+        callback: ScriptOps.npmBuild
+    }
+]);
+
 // Inject globals.
 (global as any).Task = Task;
 
@@ -57,8 +83,7 @@ if (!fs.existsSync(options.tuskFilePath)) {
 require(path.resolve(path.join(".", options.tuskFilePath)));
 
 // Begin processing arguments.
-const args: string[] = process.argv.slice(2);
-const taskName: string | undefined = args[0];
+const taskName: string | undefined = cli.args[0];
 
 // Attempt to invoke the default action.
 if (taskName === undefined) {
@@ -102,12 +127,6 @@ if (taskName === undefined) {
     else {
         console.log(colors.red("No default action could be inferred."))
         process.exit(1);
-    }
-}
-// List registered tasks.
-else if (taskName === "list") {
-    for (const task of Tasks.values()) {
-        console.log(colors.cyan(task.name) + " " + colors.gray(task.desc || ""));
     }
 }
 // Run a specific task.
