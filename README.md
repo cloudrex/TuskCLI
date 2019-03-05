@@ -2,7 +2,6 @@
 
 TuskCLI is a CLI-based task runner.
 
-
 #### Options
 
 ```bash
