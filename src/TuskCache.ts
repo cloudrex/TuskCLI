@@ -10,7 +10,7 @@ export interface ICache {
     readonly defaultAction: DefaultAction;
 }
 
-export default class TuskCache {
+export default abstract class TuskCache {
     protected static readonly location: string = ".TuskCache.json";
 
     protected static loadedTuskCache?: ICache;
