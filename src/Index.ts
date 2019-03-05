@@ -1,10 +1,8 @@
 #!/usr/bin/env node
 
-import colors from "colors";
 import Task, {Tasks} from "./Task";
 import OpRunner from "./OpRunner";
 import fs from "fs";
-import {ScriptOps} from "@atlas/automata";
 import {IPackage, DefaultAction} from "./Misc";
 import cli from "commander";
 import TuskCache from "./TuskCache";

@@ -6,15 +6,23 @@ import colors from "colors";
 import {IOptions} from "./Options";
 import {ScriptOps} from "@atlas/automata";
 import {DefaultAction} from "./Misc";
+import TuskCache from "./TuskCache";
 
 export default abstract class Tusk {
     public static readonly packageLocation: string = "package.json";
+    public static readonly gitIgnoreLocation: string = ".gitignore";
 
     public static readonly options: IOptions = {
-        tuskFilePath: "TuskFile.js"
+        tuskFilePath: "TuskFile.js",
+        verbose: false
     };
 
     public static processCliOptions(): void {
+        // Turn on verbose mode. This should be the first check, since others may end the program prematurely.
+        if (cli.verbose) {
+            Tusk.options.verbose = true;
+        }
+
         // Apply CLI arguments & override options (if applicable).
         if (cli.tuskfile) {
             Tusk.options.tuskFilePath = cli.tuskFile;
@@ -42,12 +50,26 @@ export default abstract class Tusk {
         if (cli.init) {
             // Ensure TuskFile does not already exist.
             if (fs.existsSync(Tusk.options.tuskFilePath)) {
-                console.log(colors.red("TuskFile.js already exists in current directory."));
-                process.exit(1);
+                throw Report.fatal(`${Tusk.options.tuskFilePath} already exists in current directory.`);
             }
 
             // Write TuskFile.
-            fs.writeFileSync("TuskFile.js", "//\n");
+            fs.writeFileSync(Tusk.options.tuskFilePath, "//\n");
+
+            // Attempt to add TuskCache file entry to '.gitignore'.
+            if (fs.existsSync(Tusk.gitIgnoreLocation)) {
+                const lines: string[] = fs.readFileSync(Tusk.gitIgnoreLocation).toString().trim().split("\n");
+
+                // Add TuskCache file if it's not already ignored.
+                if (!lines.includes(TuskCache.location)) {
+                    lines.push(TuskCache.location);
+
+                    // Save the '.gitignore' file along with the new entry. Also add an extra line.
+                    fs.writeFileSync(Tusk.gitIgnoreLocation, lines.join("\n") + "\n");
+                }
+
+                Report.verbose(`Added entry for ${TuskCache.location} in ${Tusk.gitIgnoreLocation}`);
+            }
 
             // Exit application.
             process.exit(0);
@@ -63,6 +85,7 @@ export default abstract class Tusk {
             .option("-d, --default", "specify the default action")
             .option("-l, --list", "list all available tasks")
             .option("-i, --init", "initialize a TuskFile in the current directory")
+            .option("-v, --verbose", "display additional information")
             .parse(process.argv);
     }
 
@@ -74,7 +97,7 @@ export default abstract class Tusk {
                 callback: ScriptOps.npmBuild
             }
         ]);
-        
+
         Task(DefaultAction.Run, "Run the project", [
             {
                 name: "run",
@@ -84,3 +107,4 @@ export default abstract class Tusk {
         ]);
     }
 }
+;

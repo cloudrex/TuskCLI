@@ -1,4 +1,4 @@
 node_modules/
 dist/
-.TuskCache.json
 TuskFile.js
+.TuskCache.json

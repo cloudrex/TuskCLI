@@ -11,7 +11,7 @@ export interface ICache {
 }
 
 export default abstract class TuskCache {
-    protected static readonly location: string = ".TuskCache.json";
+    public static readonly location: string = ".TuskCache.json";
 
     protected static loadedTuskCache?: ICache;
 
@@ -34,6 +34,8 @@ export default abstract class TuskCache {
     public static readCache(primeLoaded: boolean = true): ICache | null {
         // Give priority to previously loaded cache, return it.
         if (primeLoaded && TuskCache.loadedTuskCache !== undefined) {
+            Report.verbose("Using cached TuskCache file.");
+
             return TuskCache.loadedTuskCache;
         }
 
@@ -55,7 +57,7 @@ export default abstract class TuskCache {
      */
     public static get isPackageModified(): boolean {
         // TuskCache file does not exist yet--nothing to compare current package manifest version to.
-        if (TuskCache.exists) {
+        if (!TuskCache.exists) {
             return true;
         }
         
@@ -86,7 +88,8 @@ export default abstract class TuskCache {
     public static update(options: Partial<ICache>): void {
         let existing: ICache | undefined = undefined;
 
-        if (fs.existsSync(TuskCache.location)) {
+        // A TuskCache file already exists. Load it.
+        if (TuskCache.exists) {
             existing = JSON.parse(fs.readFileSync(TuskCache.location).toString());
         }
 
@@ -104,7 +107,11 @@ export default abstract class TuskCache {
                 ...TuskCache.loadedTuskCache,
                 ...newOptions
             };
+
+            Report.verbose("Updated existing TuskCache file in-memory cache.");
         }
+
+        Report.verbose("Updated TuskCache file");
     }
 
     public static get exists(): boolean {
