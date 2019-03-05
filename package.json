@@ -5,7 +5,8 @@
     "main": "dist/Index.js",
     "scripts": {
         "build": "tsc",
-        "link": "rm -rf dist && npm run build && sudo npm link"
+        "link": "rm -rf dist && npm run build && sudo npm link",
+        "prepublishOnly": "npm run build"
     },
     "bin": {
         "tusk": "dist/Index.js"
