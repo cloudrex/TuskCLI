@@ -1,0 +1,25 @@
+{
+    "name": "tusk-cli",
+    "version": "1.0.0",
+    "description": "Command line utility for the Tusk package",
+    "main": "dist/Index.js",
+    "scripts": {
+        "build": "tsc"
+    },
+    "bin": {
+        "tusk": "dist/Index.js"
+    },
+    "keywords": [
+        "cli",
+        "task"
+    ],
+    "author": "CloudRex <cloudrex@outlook.com>",
+    "license": "MIT",
+    "dependencies": {
+        "@atlas/automata": "^1.2.3",
+        "commander": "^2.19.0"
+    },
+    "devDependencies": {
+        "@types/node": "^11.10.4"
+    }
+}
