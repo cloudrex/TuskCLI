@@ -13,8 +13,10 @@ import {IOptions} from "./Options";
 // Prepare & parse CLI.
 cli
     .version("Please see NPM package for details")
-    .option("t, --tuskfile","Specify the path to the TuskFile")
-    .option("d, --default", "Specify the default action")
+    .option("-t, --tuskfile","specify the path to the TuskFile")
+    .option("-d, --default", "specify the default action")
+    .option("-l, --list", "list all available tasks")
+    .option("-i, --init", "initialize a TuskFile in the current directory")
     .parse(process.argv);
 
 const options: IOptions = {
@@ -32,7 +34,7 @@ if (cli.default) {
 
 // Ensure TuskFile exists.
 if (!fs.existsSync(options.tuskFilePath)) {
-    console.log(colors.red(`${options.tuskFilePath} not found (case-sensitive)`));
+    console.log(colors.red(`TuskFile.js not found in specified path (case-sensitive).`));
     process.exit(1);
 }
 
