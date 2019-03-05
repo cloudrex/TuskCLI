@@ -9,6 +9,8 @@ import {ScriptOps} from "@atlas/automata";
 import {IPackage, DefaultAction} from "./Misc";
 import cli from "commander";
 import {IOptions} from "./Options";
+import TuskCache from "./TuskCache";
+import md5File from "md5-file";
 
 // Prepare & parse CLI.
 cli
@@ -90,7 +92,7 @@ const taskName: string | undefined = cli.args[0];
 if (taskName === undefined) {
     // Attempt to choose default action from package.json.
     if ((options.defaultAction === undefined || options.defaultAction === DefaultAction.Infer) && fs.existsSync("package.json")) {
-        const pckg: IPackage = JSON.parse(fs.readFileSync("./").toString());
+        const pckg: IPackage = JSON.parse(fs.readFileSync("package.json").toString());
 
         if (pckg.scripts !== undefined) {
             // 'build' is present and 'start' is not.
@@ -123,6 +125,9 @@ if (taskName === undefined) {
             console.log(colors.red("An invalid default action was specified."));
             process.exit(1);
         }
+
+        // Attempt to update default action in cache.
+        TuskCache.updateDefaultAction(options.defaultAction);
     }
     // No default action was specified.
     else {

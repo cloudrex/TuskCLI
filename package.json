@@ -17,9 +17,11 @@
     "license": "MIT",
     "dependencies": {
         "@atlas/automata": "^1.2.3",
-        "commander": "^2.19.0"
+        "commander": "^2.19.0",
+        "md5-file": "^4.0.0"
     },
     "devDependencies": {
+        "@types/md5-file": "^4.0.0",
         "@types/node": "^11.10.4"
     }
 }
