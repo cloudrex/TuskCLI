@@ -24,11 +24,21 @@ const options: IOptions = {
     tuskFilePath: "TuskFile.js"
 };
 
+// Register default tasks.
+Task("build", "Build the project", [
+    {
+        name: "build",
+        description: "Build the project",
+        callback: ScriptOps.npmBuild
+    }
+]);
+
 // Apply CLI arguments & override options (if applicable).
 if (cli.tuskfile) {
     options.tuskFilePath = cli.tuskFile;
 }
 
+// Specify the default action.
 if (cli.default) {
     options.defaultAction = cli.default;
 }
@@ -39,7 +49,7 @@ if (cli.list) {
         console.log(colors.cyan(task.name) + " " + colors.gray(task.desc || ""));
     }
 
-    if (Tasks.values.length === 0) {
+    if (Tasks.size === 0) {
         console.log(colors.gray("No tasks found."));
     }
 
@@ -55,7 +65,7 @@ if (cli.init) {
     }
 
     // Write TuskFile.
-    fs.writeFileSync("TuskFile.js", "//");
+    fs.writeFileSync("TuskFile.js", "//\n");
 
     // Exit application.
     process.exit(0);
@@ -66,15 +76,6 @@ if (!fs.existsSync(options.tuskFilePath)) {
     console.log(colors.red(`TuskFile.js not found in specified path (case-sensitive).`));
     process.exit(1);
 }
-
-// Register default tasks.
-Task("build", "Build the project", [
-    {
-        name: "build",
-        description: "Build the project",
-        callback: ScriptOps.npmBuild
-    }
-]);
 
 // Inject globals.
 (global as any).Task = Task;
