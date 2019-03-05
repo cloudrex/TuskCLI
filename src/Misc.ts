@@ -8,7 +8,7 @@ export interface IPackage {
 }
 
 export enum DefaultAction {
-    Start = "start",
+    Run = "run",
     Build = "build",
     Infer = "infer"
 }

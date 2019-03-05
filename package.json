@@ -4,7 +4,8 @@
     "description": "Command line utility for the Tusk package",
     "main": "dist/Index.js",
     "scripts": {
-        "build": "tsc"
+        "build": "tsc",
+        "link": "rm -rf dist && npm run build && sudo npm link"
     },
     "bin": {
         "tusk": "dist/Index.js"

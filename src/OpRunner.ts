@@ -81,7 +81,7 @@ export default class OpRunner {
             const description: string = colors.gray(OpRunner.breakDescription(
                 (counter.toString().length + this.ops.size.toString().length + 1),
                 op.name.length,
-                op.description || "")
+                op.desc || "")
             );
 
             // Display operation info.
@@ -104,6 +104,15 @@ export default class OpRunner {
         }
 
         console.log(colors.green(`  Task completed successfully\n`));
+    }
+
+    /**
+     * Prepare and run operations from a registered task.
+     */
+    public static runTask(name: string): Promise<void> {
+        OpRunner.prepare(name);
+
+        return OpRunner.run();
     }
 
     /**

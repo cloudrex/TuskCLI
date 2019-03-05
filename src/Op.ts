@@ -6,7 +6,7 @@ export type OpCallback = Callback<void | PromiseOr<boolean>>;
 
 export interface IOp {
     readonly name: string;
-    readonly description?: string;
+    readonly desc?: string;
     readonly callback: OpCallback;
 };
 
