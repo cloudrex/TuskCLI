@@ -20,7 +20,7 @@
     "dependencies": {
         "commander": "^2.19.0",
         "md5-file": "^4.0.0",
-        "tusk": "^1.2.3"
+        "tusk": "^1.2.4"
     },
     "devDependencies": {
         "@types/md5-file": "^4.0.0",
