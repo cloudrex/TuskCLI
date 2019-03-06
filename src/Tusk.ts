@@ -90,6 +90,7 @@ export default abstract class Tusk {
             .option("-d, --default <action>", "specify the default action")
             .option("-l, --list", "list all available tasks")
             .option("-i, --init", "initialize a TuskFile in the current directory")
+            .option("-b, --bare", "skip registration of default tasks")
             .option("-v, --verbose", "display additional information")
             .parse(process.argv);
     }
