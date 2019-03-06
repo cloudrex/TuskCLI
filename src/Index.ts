@@ -9,9 +9,6 @@ import TuskCache from "./TuskCache";
 import Tusk from "./Tusk";
 import Report from "./Report";
 
-// Register default tasks.
-Tusk.registerDefaultTasks();
-
 // Ensure TuskFile exists.
 if (!fs.existsSync(Tusk.options.tuskFilePath)) {
     throw Report.fatal("TuskFile.js not found in specified path (case-sensitive).");
@@ -19,6 +16,9 @@ if (!fs.existsSync(Tusk.options.tuskFilePath)) {
 
 // Inject globals.
 (global as any).Task = Task;
+
+// Register default tasks.
+Tusk.registerDefaultTasks();
 
 // Import TuskFile.
 require(TuskCache.getResolvedPath());
