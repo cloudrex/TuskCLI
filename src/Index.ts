@@ -79,6 +79,11 @@ async function handleRequest() {
         }
     }
     else {
+        // Notify the user of more than one tasks being processed.
+        if (requestedTasks.length > 1) {
+            console.log(`\n  🦏 Processing ${requestedTasks.length} tasks\n`);
+        }
+
         // Run the requested tasks.
         for (const task of requestedTasks) {
             // The requested task exists, run it.
