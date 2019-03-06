@@ -8,6 +8,7 @@ import cli from "commander";
 import TuskCache from "./TuskCache";
 import Tusk from "./Tusk";
 import Report from "./Report";
+import tusk from "tusk";
 
 // Ensure TuskFile exists.
 if (!fs.existsSync(Tusk.options.tuskFilePath)) {
@@ -16,6 +17,7 @@ if (!fs.existsSync(Tusk.options.tuskFilePath)) {
 
 // Inject globals.
 (global as any).Task = Task;
+(global as any).tusk = tusk;
 
 // Register default tasks.
 Tusk.registerDefaultTasks();
