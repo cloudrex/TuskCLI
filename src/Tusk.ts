@@ -99,7 +99,7 @@ export default abstract class Tusk {
     public static registerDefaultTasks(): void {
         const prepareOp: IOp = {
             name: "prepare",
-            desc: "Prepare environment. Install dependencies if applicable.",
+            desc: "Prepare environment. Install project dependencies if applicable.",
 
             callback: () => {
                 // Dependencies are not yet installed.
@@ -122,7 +122,7 @@ export default abstract class Tusk {
 
         Task(DefaultAction.Run, "Run the project.", [
             prepareOp,
-            
+
             {
                 name: "run",
                 desc: "Run the project",
