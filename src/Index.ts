@@ -81,12 +81,14 @@ async function handleRequest() {
     else {
         // Run the requested tasks.
         for (const task of requestedTasks) {
+            // The requested task exists, run it.
             if (Tasks.has(task)) {
                 await OpRunner.runTask(task);
             }
-
             // Otherwise, the requested task does not exist.
-            Report.fatal(`Task '${task}' does not exist.`);
+            else {
+                Report.fatal(`Task '${task}' does not exist.`);
+            }
         }
     }
 }

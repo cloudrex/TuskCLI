@@ -1,4 +1,4 @@
-import {IOp} from "./Op";
+import {IOp, PromiseOr} from "./Op";
 import colors from "colors";
 import SpaceFactory from "./SpaceFactory";
 import {Tasks} from "./Task";
@@ -15,7 +15,7 @@ export default class OpRunner {
         }
 
         this.ops.clear();
-        
+
         for (const op of Tasks.get(taskName)!.ops) {
             this.ops.set(op.name, op);
         }
@@ -67,11 +67,16 @@ export default class OpRunner {
     /**
      * Run all queued operations.
      */
-    public static async run(): Promise<void> {
+    public static async run(taskName?: string): Promise<void> {
         let counter: number = 1;
 
         // Create initial newline.
         console.log();
+
+        // Display the task's title (if applicable).
+        if (taskName !== undefined) {
+            console.log(colors.bold.gray(`  Running task '${taskName}'\n`));
+        }
 
         for (const op of this.ops.values()) {
             // Prepare styled entities.
@@ -103,16 +108,16 @@ export default class OpRunner {
             return;
         }
 
-        console.log(colors.green(`  Task completed successfully\n`));
+        console.log(colors.green(`  Task${taskName ? " '" + taskName + "'" : ""} completed successfully\n`));
     }
 
     /**
      * Prepare and run operations from a registered task.
      */
-    public static runTask(name: string): Promise<void> {
-        OpRunner.prepare(name);
-
-        return OpRunner.run();
+    public static runTask(name: string): PromiseOr<void> {
+        if (OpRunner.prepare(name)) {
+            return OpRunner.run(name);
+        }
     }
 
     /**
