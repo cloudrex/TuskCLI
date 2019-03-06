@@ -14,7 +14,8 @@ export default abstract class Tusk {
 
     public static readonly options: IOptions = {
         tuskFilePath: "TuskFile.js",
-        verbose: false
+        verbose: false,
+        bare: false
     };
 
     public static processCliOptions(): void {
@@ -31,6 +32,10 @@ export default abstract class Tusk {
         // Specify the default action.
         if (cli.default) {
             Tusk.options.defaultAction = cli.default;
+        }
+
+        if (cli.bare) {
+            Tusk.options.bare = true;
         }
 
         // List all available tasks.
