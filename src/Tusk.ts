@@ -90,15 +90,15 @@ export default abstract class Tusk {
     }
 
     public static registerDefaultTasks(): void {
-        Task(DefaultAction.Build, "Build the project", [
+        Task(DefaultAction.Build, "Build the project.", [
             {
                 name: "build",
-                desc: "Build the project",
+                desc: "Build the project.",
                 callback: ScriptOps.npmBuild
             }
         ]);
 
-        Task(DefaultAction.Run, "Run the project", [
+        Task(DefaultAction.Run, "Run the project.", [
             {
                 name: "run",
                 desc: "Run the project",
