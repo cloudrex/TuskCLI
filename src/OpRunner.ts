@@ -75,16 +75,18 @@ export default class OpRunner {
 
         // Display the task's title (if applicable).
         if (taskName !== undefined) {
-            console.log(colors.bold.gray(`  Running task '${taskName}'\n`));
+            console.log("%s%s", colors.gray.bgWhite.bold.inverse(" →  "), colors.gray.bold.bgWhite(` Running task '${taskName}'\n`));
         }
 
         for (const op of this.ops.values()) {
             // Prepare styled entities.
-            const progress: string = colors.gray(`${counter}/${this.ops.size}`);
+            const progress: string = colors.gray(`(${counter}/${this.ops.size})`);
             const name: string = colors.cyan(op.name);
 
             const description: string = colors.gray(OpRunner.breakDescription(
-                (counter.toString().length + this.ops.size.toString().length + 1),
+                // '+ 1' represents the '/' character, and the '+ 2' represents '( )'.
+                (counter.toString().length + this.ops.size.toString().length + 1 + 2),
+                
                 op.name.length,
                 op.desc || "")
             );
@@ -129,7 +131,7 @@ export default class OpRunner {
 
         for (const char of description) {
             if (counter >= threshold) {
-                // '+ 4' corresponds to 2 initial spaces and the counter-name-desc (3) separation spaces.
+                // '+ 4' corresponds to 2 initial spaces, and the counter-name-desc (3) separation spaces.
                 result += "\n" + SpaceFactory.make(nameLength + opsLength + 4);
                 counter = 0;
             }
