@@ -80,7 +80,7 @@ export default abstract class Tusk {
         // Prepare & parse CLI.
         cli
             .version("Please see NPM package for details")
-            .usage("[options] <task>")
+            .usage("[options] [task]")
             .option("-t, --tuskfile", "specify the path to the TuskFile")
             .option("-d, --default <action>", "specify the default action")
             .option("-l, --list", "list all available tasks")
