@@ -30,58 +30,65 @@ Tusk.prepareCli();
 Tusk.processCliOptions();
 
 // Begin processing arguments.
-const taskName: string | undefined = cli.args[0];
+const requestedTasks: string[] = cli.args;
 
-// Attempt to invoke the default action.
-if (taskName === undefined) {
-    // Attempt to choose default action from package manifest.
-    if ((Tusk.options.defaultAction === undefined || Tusk.options.defaultAction === DefaultAction.Infer) && TuskCache.packageExists) {
-        const pckg: IPackage = JSON.parse(fs.readFileSync(Tusk.packageLocation).toString());
+async function handleRequest() {
+    // Attempt to invoke the default action.
+    if (requestedTasks.length === 0) {
+        // Attempt to choose default action from package manifest.
+        if ((Tusk.options.defaultAction === undefined || Tusk.options.defaultAction === DefaultAction.Infer) && TuskCache.packageExists) {
+            const pckg: IPackage = JSON.parse(fs.readFileSync(Tusk.packageLocation).toString());
 
-        if (pckg.scripts !== undefined) {
-            // 'build' is present and 'start' is not.
-            if (pckg.scripts.build !== undefined && pckg.scripts.start === undefined) {
-                Tusk.options.defaultAction = DefaultAction.Build;
-            }
-            // 'start' is present and 'build' is not.
-            else if (pckg.scripts.start !== undefined && pckg.scripts.build === undefined) {
-                Tusk.options.defaultAction = DefaultAction.Run;
-            }
-            // If both are present, 'start' takes priority.
-            else if (pckg.scripts.build !== undefined && pckg.scripts.start !== undefined) {
-                Tusk.options.defaultAction = DefaultAction.Run;
+            if (pckg.scripts !== undefined) {
+                // 'build' is present and 'start' is not.
+                if (pckg.scripts.build !== undefined && pckg.scripts.start === undefined) {
+                    Tusk.options.defaultAction = DefaultAction.Build;
+                }
+                // 'start' is present and 'build' is not.
+                else if (pckg.scripts.start !== undefined && pckg.scripts.build === undefined) {
+                    Tusk.options.defaultAction = DefaultAction.Run;
+                }
+                // If both are present, 'start' takes priority.
+                else if (pckg.scripts.build !== undefined && pckg.scripts.start !== undefined) {
+                    Tusk.options.defaultAction = DefaultAction.Run;
+                }
             }
         }
-    }
 
-    // Attempt to execute the default action (if applicable).
-    if (Tusk.options.defaultAction !== undefined) {
-        // Run the 'start' task.
-        if (Tusk.options.defaultAction === DefaultAction.Run) {
-            OpRunner.runTask(DefaultAction.Run);
+        // Attempt to execute the default action (if applicable).
+        if (Tusk.options.defaultAction !== undefined) {
+            // Run the 'start' task.
+            if (Tusk.options.defaultAction === DefaultAction.Run) {
+                OpRunner.runTask(DefaultAction.Run);
+            }
+            // Run the 'build' task.
+            else if (Tusk.options.defaultAction === DefaultAction.Build) {
+                OpRunner.runTask(DefaultAction.Build);
+            }
+            // An invalid default action was specified.
+            else {
+                throw Report.fatal("An invalid default action was specified.");
+            }
+
+            // Attempt to update default action in cache.
+            TuskCache.updateDefaultAction(Tusk.options.defaultAction);
         }
-        // Run the 'build' task.
-        else if (Tusk.options.defaultAction === DefaultAction.Build) {
-            OpRunner.runTask(DefaultAction.Build);
-        }
-        // An invalid default action was specified.
+        // No default action was specified.
         else {
-            throw Report.fatal("An invalid default action was specified.");
+            throw Report.fatal("No default action could be inferred.");
         }
-
-        // Attempt to update default action in cache.
-        TuskCache.updateDefaultAction(Tusk.options.defaultAction);
     }
-    // No default action was specified.
     else {
-        throw Report.fatal("No default action could be inferred.");
+        // Run the requested tasks.
+        for (const task of requestedTasks) {
+            if (Tasks.has(task)) {
+                await OpRunner.runTask(task);
+            }
+
+            // Otherwise, the requested task does not exist.
+            Report.fatal(`Task '${task}' does not exist.`);
+        }
     }
 }
-// Run a specific task.
-else if (Tasks.has(taskName)) {
-    OpRunner.runTask(taskName);
-}
-// Otherwise, task does not exist.
-else {
-    Report.fatal("That task does not exist.");
-}
+
+handleRequest();
