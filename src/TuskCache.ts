@@ -111,7 +111,7 @@ export default abstract class TuskCache {
             Report.verbose("Updated existing TuskCache file in-memory cache.");
         }
 
-        Report.verbose("Updated TuskCache file");
+        Report.verbose("Updated TuskCache file.");
     }
 
     public static get exists(): boolean {
