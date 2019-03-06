@@ -23,7 +23,7 @@ if (!fs.existsSync(Tusk.options.tuskFilePath)) {
 // Import TuskFile.
 require(TuskCache.getResolvedPath());
 
-// Prepare & process CLI.
+// Prepare & process CLI. Ensure CLI is processed post-TuskFile importing.
 Tusk.prepareCli();
 Tusk.processCliOptions();
 
