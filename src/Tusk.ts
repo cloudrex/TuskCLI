@@ -7,6 +7,7 @@ import {IOptions} from "./Options";
 import {ScriptOps} from "tusk";
 import {DefaultAction} from "./Misc";
 import TuskCache from "./TuskCache";
+import {IOp} from "./Op";
 
 export default abstract class Tusk {
     public static readonly packageLocation: string = "package.json";
@@ -96,7 +97,22 @@ export default abstract class Tusk {
     }
 
     public static registerDefaultTasks(): void {
+        const prepareOp: IOp = {
+            name: "prepare",
+            desc: "Prepare environment. Install dependencies if applicable.",
+
+            callback: () => {
+                // Dependencies are not yet installed.
+                if (!fs.existsSync("node_modules")) {
+                    // So let's install them.
+                    return ScriptOps.npmInstall();
+                }
+            }
+        };
+
         Task(DefaultAction.Build, "Build the project.", [
+            prepareOp,
+
             {
                 name: "build",
                 desc: "Build the project.",
@@ -105,6 +121,8 @@ export default abstract class Tusk {
         ]);
 
         Task(DefaultAction.Run, "Run the project.", [
+            prepareOp,
+            
             {
                 name: "run",
                 desc: "Run the project",
