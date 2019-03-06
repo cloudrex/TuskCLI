@@ -1,6 +1,6 @@
 {
     "name": "tusk-cli",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Command line utility for the Tusk package",
     "main": "dist/Index.js",
     "scripts": {
