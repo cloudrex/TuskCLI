@@ -75,7 +75,7 @@ export default class OpRunner {
 
         // Display the task's title (if applicable).
         if (taskName !== undefined) {
-            console.log("%s%s", colors.gray.bgWhite.bold.inverse(" →  "), colors.gray.bold.bgWhite(` Running task '${taskName}'\n`));
+            console.log("%s%s", colors.gray.bgWhite.inverse(" →  "), colors.gray.bgWhite(` Running task '${taskName}'\n`));
         }
 
         for (const op of this.ops.values()) {
