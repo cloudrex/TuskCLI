@@ -12,10 +12,6 @@ import Report from "./Report";
 // Register default tasks.
 Tusk.registerDefaultTasks();
 
-// Prepare & process CLI.
-Tusk.prepareCli();
-Tusk.processCliOptions();
-
 // Ensure TuskFile exists.
 if (!fs.existsSync(Tusk.options.tuskFilePath)) {
     throw Report.fatal("TuskFile.js not found in specified path (case-sensitive).");
@@ -24,8 +20,12 @@ if (!fs.existsSync(Tusk.options.tuskFilePath)) {
 // Inject globals.
 (global as any).Task = Task;
 
-// Import ActionFile.
+// Import TuskFile.
 require(TuskCache.getResolvedPath());
+
+// Prepare & process CLI.
+Tusk.prepareCli();
+Tusk.processCliOptions();
 
 // Begin processing arguments.
 const taskName: string | undefined = cli.args[0];
