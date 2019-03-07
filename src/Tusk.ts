@@ -91,7 +91,7 @@ export default abstract class Tusk {
      ⎩ the version.
 `)
 
-            .usage("[options] [task]")
+            .usage("[options] [tasks]")
             .option("-t, --tuskfile <path>", "specify the path to the TuskFile")
             .option("-d, --default <action>", "specify the default action")
             .option("-l, --list", "list all available tasks")
