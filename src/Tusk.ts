@@ -85,7 +85,12 @@ export default abstract class Tusk {
     public static prepareCli(): void {
         // Prepare & parse CLI.
         cli
-            .version("🦏 Please see NPM package for details")
+            .version(`
+     ⎧ Please refer to the NPM
+  🦏 ⎨ package for details on
+     ⎩ the version.
+`)
+
             .usage("[options] [task]")
             .option("-t, --tuskfile <path>", "specify the path to the TuskFile")
             .option("-d, --default <action>", "specify the default action")
