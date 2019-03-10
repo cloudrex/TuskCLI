@@ -81,7 +81,7 @@ async function handleRequest() {
     else {
         // Notify the user of more than one tasks being processed.
         if (requestedTasks.length > 1) {
-            console.log(`\n  🦏 Processing ${requestedTasks.length} tasks\n`);
+            console.log(`\n  {!} Processing ${requestedTasks.length} tasks\n`);
         }
 
         // Run the requested tasks.
