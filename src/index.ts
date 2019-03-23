@@ -12,7 +12,7 @@ import tusk from "tusk";
 
 // Ensure TuskFile exists.
 if (!fs.existsSync(Tusk.options.tuskFilePath)) {
-    throw Report.fatal("TuskFile.js not found in specified path (case-sensitive).");
+    throw Report.fatal("tuskFile.js not found in specified path (case-sensitive).");
 }
 
 // Inject globals.

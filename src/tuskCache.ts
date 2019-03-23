@@ -11,7 +11,7 @@ export interface ICache {
 }
 
 export default abstract class TuskCache {
-    public static readonly location: string = ".TuskCache.json";
+    public static readonly location: string = ".tuskCache.json";
 
     protected static loadedTuskCache?: ICache;
 
@@ -34,7 +34,7 @@ export default abstract class TuskCache {
     public static readCache(primeLoaded: boolean = true): ICache | null {
         // Give priority to previously loaded cache, return it.
         if (primeLoaded && TuskCache.loadedTuskCache !== undefined) {
-            Report.verbose("Using cached TuskCache file.");
+            Report.verbose("Using cached tuskCache file.");
 
             return TuskCache.loadedTuskCache;
         }
@@ -108,10 +108,10 @@ export default abstract class TuskCache {
                 ...newOptions
             };
 
-            Report.verbose("Updated existing TuskCache file in-memory cache.");
+            Report.verbose("Updated existing tuskCache file in-memory cache.");
         }
 
-        Report.verbose("Updated TuskCache file.");
+        Report.verbose("Updated tuskCache file.");
     }
 
     public static get exists(): boolean {

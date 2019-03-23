@@ -14,7 +14,7 @@ export default abstract class Tusk {
     public static readonly gitIgnoreLocation: string = ".gitignore";
 
     public static readonly options: IOptions = {
-        tuskFilePath: "TuskFile.js",
+        tuskFilePath: "tuskFile.js",
         verbose: false,
         bare: false
     };
