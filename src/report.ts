@@ -1,5 +1,5 @@
 import colors from "colors";
-import Tusk from "./Tusk";
+import Tusk from "./tusk";
 
 /**
  * Report errors and warnings to the user.

@@ -1,4 +1,4 @@
-import {IOp} from "./Op";
+import {IOp} from "./op";
 
 export const Tasks: Map<string, ITask> = new Map();
 

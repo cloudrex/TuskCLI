@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import Task, {Tasks} from "./Task";
-import OpRunner from "./OpRunner";
+import Task, {Tasks} from "./task";
+import OpRunner from "./opRunner";
 import fs from "fs";
-import {IPackage, DefaultAction} from "./Misc";
+import {IPackage, DefaultAction} from "./misc";
 import cli from "commander";
-import TuskCache from "./TuskCache";
-import Tusk from "./Tusk";
-import Report from "./Report";
+import TuskCache from "./tuskCache";
+import Tusk from "./tusk";
+import Report from "./report";
 import tusk from "tusk";
 
 // Ensure TuskFile exists.

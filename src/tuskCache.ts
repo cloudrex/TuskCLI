@@ -1,9 +1,9 @@
 import fs from "fs";
-import {DefaultAction} from "./Misc";
+import {DefaultAction} from "./misc";
 import md5File = require("md5-file");
-import Report from "./Report";
+import Report from "./report";
 import path from "path";
-import Tusk from "./Tusk";
+import Tusk from "./tusk";
 
 export interface ICache {
     readonly packageJsonVersion: string;

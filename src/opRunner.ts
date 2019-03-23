@@ -1,7 +1,7 @@
-import {IOp, PromiseOr} from "./Op";
+import {IOp, PromiseOr} from "./op";
 import colors from "colors";
-import SpaceFactory from "./SpaceFactory";
-import {Tasks} from "./Task";
+import SpaceFactory from "./spaceFactory";
+import {Tasks} from "./task";
 
 export default class OpRunner {
     protected static readonly ops: Map<string, IOp> = new Map();

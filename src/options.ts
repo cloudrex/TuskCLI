@@ -1,4 +1,4 @@
-import {DefaultAction} from "./Misc";
+import {DefaultAction} from "./misc";
 
 export interface IOptions {
     /**

@@ -1,13 +1,13 @@
 import cli from "commander";
 import fs from "fs";
-import Task, {Tasks} from "./Task";
-import Report from "./Report";
+import Task, {Tasks} from "./task";
+import Report from "./report";
 import colors from "colors";
-import {IOptions} from "./Options";
+import {IOptions} from "./options";
 import {ScriptOps} from "tusk";
-import {DefaultAction} from "./Misc";
-import TuskCache from "./TuskCache";
-import {IOp} from "./Op";
+import {DefaultAction} from "./misc";
+import TuskCache from "./tuskCache";
+import {IOp} from "./op";
 
 export default abstract class Tusk {
     public static readonly packageLocation: string = "package.json";
