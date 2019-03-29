@@ -5,6 +5,7 @@
     "main": "dist/index.js",
     "scripts": {
         "build": "tsc",
+        "test": "npm run build && node dist/tests/runner.js",
         "link": "rm -rf dist && npm run build && sudo npm link",
         "prepublishOnly": "npm run build"
     },
@@ -24,7 +25,8 @@
     },
     "devDependencies": {
         "@types/md5-file": "^4.0.0",
-        "@types/node": "^11.10.4"
+        "@types/node": "^11.10.4",
+        "unit": "^1.4.3-0"
     },
     "files": [
         "dist"
