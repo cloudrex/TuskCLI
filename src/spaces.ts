@@ -1,4 +1,8 @@
-export default class SpaceFactory {
+/**
+ * Space character manipulation and generation
+ * utility class.
+ */
+export default class Spaces {
     public static make(length: number, char: string = " "): string {
         let result: string = "";
 

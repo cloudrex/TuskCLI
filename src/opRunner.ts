@@ -1,6 +1,6 @@
 import {IOp, PromiseOr} from "./op";
 import colors from "colors";
-import SpaceFactory from "./spaceFactory";
+import Spaces from "./spaces";
 import {Tasks} from "./task";
 
 export default class OpRunner {
@@ -132,7 +132,7 @@ export default class OpRunner {
         for (const char of description) {
             if (counter >= threshold) {
                 // '+ 4' corresponds to 2 initial spaces, and the counter-name-desc (3) separation spaces.
-                result += "\n" + SpaceFactory.make(nameLength + opsLength + 4);
+                result += "\n" + Spaces.make(nameLength + opsLength + 4);
                 counter = 0;
             }
             else {
