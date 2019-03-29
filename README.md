@@ -1,6 +1,6 @@
 ### TuskCLI
 
-TuskCLI is a CLI-based task runner.
+TuskCLI is a CLI-based task runner for Node.JS.
 
 #### Options
 
