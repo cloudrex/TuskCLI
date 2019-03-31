@@ -1,6 +1,6 @@
 {
     "name": "tusk-cli",
-    "version": "1.0.5-0",
+    "version": "1.0.6-0",
     "description": "Command-line-based task runner",
     "main": "dist/index.js",
     "scripts": {
